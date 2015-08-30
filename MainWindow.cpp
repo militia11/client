@@ -34,12 +34,13 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_pushButton_clicked() {
-		QByteArray arx(">183<");
-		vClient->writeMessage(arx);
+		QByteArray vMessageData(">336<");
+		qDebug() << "sumaFile->" <<vMessageData;
+		vClient->writeMessage(vMessageData);
 }
 
 void MainWindow::on_pushButton_2_clicked() {
-	QImage vImage = QImage ("/home/mmichniewski/pies.jpg", "JPG"); // from data load
+	QImage vImage = QImage ("/home/mmichniewski/b.jpeg", "JPEG");
 	QBuffer vBuffer;
 
 	QImageWriter vWriter(&vBuffer, "JPEG");
