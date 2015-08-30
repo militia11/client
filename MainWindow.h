@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 #include "Client.h"
 #include <QMainWindow>
-
+#include <inttypes.h> //uint_t* and int_t* types
 namespace Ui {
 class MainWindow;
 }
@@ -21,6 +21,7 @@ private slots:
 	void on_pushButton_2_clicked();
 
 private:
+	uint8_t CalculateFileDataChecksum(QByteArray aData);
 	Ui::MainWindow *ui;
 	Client *vClient;
 };

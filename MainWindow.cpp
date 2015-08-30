@@ -3,6 +3,8 @@
 #include <iostream>
 #include <QTimer>
 #include <QFile>
+#include <QImage>
+#include <QImageWriter>
 
 MainWindow::MainWindow(QWidget *parent) :
 		QMainWindow(parent),
@@ -10,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
 		ui->setupUi(this);
 		vClient = new Client;
 		vClient->connectToHost("localhost");
+
+		//image.loadFromData(QByteArray data);
 
 		//write
 		//		QFile File("/home/mmichniewski/b.txt");//pobranyPies.jpg");
@@ -35,15 +39,27 @@ void MainWindow::on_pushButton_clicked() {
 }
 
 void MainWindow::on_pushButton_2_clicked() {
-		QFile vFile("/home/mmichniewski/a.txt");  //pies.jpg
+	QImage vImage = QImage ("/home/mmichniewski/pies.jpg", "JPG"); // from data load
+	QBuffer vBuffer;
 
-		if (!vFile.open(QIODevice::ReadOnly)) {
-				qDebug() << "Nie można otworzyć pliku";
-		}
+	QImageWriter vWriter(&vBuffer, "JPEG");
+	vWriter.write(vImage);
 
-		// dane
-		QByteArray vData(vFile.readAll());
-		qDebug() << vData;
-		vFile.close();
+	QByteArray vData = vBuffer.data();
+
+		int v = CalculateFileDataChecksum(vData);
+		qDebug() << "suma->" <<v;
+
 		vClient->writeData(vData);
+}
+
+uint8_t MainWindow::CalculateFileDataChecksum(QByteArray aData)
+{
+	uint8_t vSum = 0;
+
+	for (int i = 0; i < aData.length(); ++i) {
+			vSum += aData[i];
+	}
+
+	return vSum;
 }
