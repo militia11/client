@@ -3,6 +3,7 @@
 #include <QtCore>
 #include <QtNetwork>
 #include <inttypes.h> //uint_t* and int_t* types
+#include <QByteArray>
 
 class Client : public QObject
 {
@@ -11,11 +12,14 @@ public:
 		explicit Client(QObject *parent = 0);
 
 public slots:
-		bool connectToHost(QString host);
+    bool readData();
+        bool connectToHost(QString host);
 		bool writeData(QByteArray data);
 		bool writeMessage(QByteArray aData);
 		uint8_t CalculateMessageChecksum(QByteArray aData);
 private:
-		QTcpSocket *socket;
+        QTcpSocket *mSocket;
+        QByteArray *mReceiveBuffer;
+        QByteArray *mData;
 };
 #endif // CLIENT_H

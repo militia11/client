@@ -3,19 +3,53 @@
 static inline QByteArray IntToArray(int32_t source);
 
 Client::Client(QObject *parent) : QObject(parent) {
-		socket = new QTcpSocket(this);
+    mSocket = new QTcpSocket(this);
+mReceiveBuffer = 0;
+mData = 0;
+}
+
+bool Client::readData()
+{	//while (mSocket->bytesAvailable() > 0) {
+                QByteArray vData = mSocket->readAll();
+                for(int i=0;i<vData.size();i++) {
+                    qDebug() << vData[i];
+                }
+                // if wiadomość równa '<'
+                // wyślij dane aktualnie sprawdzanego pliku
+                //(sprawdzanej jego sumy)
+
+//				mReceiveBuffer->append(vData);
+
+//				for (int i = 0; i < vData.length(); i++) {
+
+//						char vTargetSign = vData[i];
+
+//						switch (vTargetSign) {
+
+//								case '>':					// początek komunikatu "suma pliku"
+//										mReceiveDataMode = Mode_Receive_File_CheckSum;
+//										mReceiveByteCnt = 0;
+//										break;
+
+//								default:
+//										break;
+//						}
+
+//						RouteData(vTargetSign);
+//				}
+//		}
 }
 
 bool Client::connectToHost(QString host) {
-		socket->connectToHost(host, 1234);
-		return socket->waitForConnected();
+        mSocket->connectToHost(host, 1234);
+        return mSocket->waitForConnected();
 }
 
 bool Client::writeData(QByteArray data) {
-		if (socket->state() == QAbstractSocket::ConnectedState) {
-				socket->write(IntToArray(data.size())); //write size of data
-				socket->write(data); //write the data itself
-				return socket->waitForBytesWritten();
+        if (mSocket->state() == QAbstractSocket::ConnectedState) {
+                mSocket->write(IntToArray(data.size())); //write size of data
+                mSocket->write(data); //write the data itself
+                return mSocket->waitForBytesWritten();
 		} else {
 				return false;
 		}
@@ -23,9 +57,9 @@ bool Client::writeData(QByteArray data) {
 
 bool Client::writeMessage(QByteArray data)
 {
-	if (socket->state() == QAbstractSocket::ConnectedState) {
-			socket->write(data); //write the data itself
-			return socket->waitForBytesWritten();
+    if (mSocket->state() == QAbstractSocket::ConnectedState) {
+            mSocket->write(data); //write the data itself
+            return mSocket->waitForBytesWritten();
 	} else {
 			return false;
 	}

@@ -49,9 +49,9 @@ void MainWindow::on_pushButton_2_clicked() {
 	QByteArray vData = vBuffer.data();
 
 		int v = CalculateFileDataChecksum(vData);
-		qDebug() << "suma->" <<v;
+        qDebug() << "suma->" << v;
 
-		vClient->writeData(vData);
+        vClient->writeData(vData);
 }
 
 uint8_t MainWindow::CalculateFileDataChecksum(QByteArray aData)
