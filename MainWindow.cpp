@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 		ui(new Ui::MainWindow) {
 		ui->setupUi(this);
 		vClient = new Client;
-		vClient->connectToHost("localhost");
+		vClient->ConnectToHost("localhost");
 
 		//image.loadFromData(QByteArray data);
 
@@ -35,32 +35,31 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_pushButton_clicked() {
 		QByteArray vMessageData(">336<");
-		qDebug() << "sumaFile->" <<vMessageData;
-		vClient->writeMessage(vMessageData);
+		qDebug() << "sumaFile->" << vMessageData;
+		vClient->WriteMessage(vMessageData);
 }
 
 void MainWindow::on_pushButton_2_clicked() {
-	QImage vImage = QImage ("/home/mmichniewski/b.jpeg", "JPEG");
-	QBuffer vBuffer;
+		QImage vImage = QImage ("/home/mmichniewski/b.jpeg", "JPEG");
+		QBuffer vBuffer;
 
-	QImageWriter vWriter(&vBuffer, "JPEG");
-	vWriter.write(vImage);
+		QImageWriter vWriter(&vBuffer, "JPEG");
+		vWriter.write(vImage);
 
-	QByteArray vData = vBuffer.data();
+		QByteArray vData = vBuffer.data();
 
 		int v = CalculateFileDataChecksum(vData);
-        qDebug() << "suma->" << v;
+		qDebug() << "suma->" << v;
 
-        vClient->writeData(vData);
+		vClient->WriteData(vData);
 }
 
-uint8_t MainWindow::CalculateFileDataChecksum(QByteArray aData)
-{
-	uint8_t vSum = 0;
+uint8_t MainWindow::CalculateFileDataChecksum(QByteArray aData) {
+		uint8_t vSum = 0;
 
-	for (int i = 0; i < aData.length(); ++i) {
-			vSum += aData[i];
-	}
+		for (int i = 0; i < aData.length(); ++i) {
+				vSum += aData[i];
+		}
 
-	return vSum;
+		return vSum;
 }
