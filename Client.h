@@ -9,7 +9,7 @@ class Client : public QObject {
 		Q_OBJECT
 	public:
 		explicit Client(QObject *parent = 0);
-		bool WriteData(QByteArray data);
+		bool WriteData(QByteArray aData);
 		bool WriteMessage(QByteArray aData);
 	bool PrepareMessageData();
 
@@ -21,6 +21,8 @@ class Client : public QObject {
 	private:
 
 		uint8_t CalculateMessageChecksum(QByteArray aData);
+		void ConvertHexAsciiToBinary(const char *aData, int aLen,
+																 char *aTarget);
 		void ConvertBinaryToHexAscii(const char *aData, int aLen,
 																 char *aTarget);
 
