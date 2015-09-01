@@ -70,7 +70,7 @@ bool Client::PrepareMessageData()
 
 bool Client::WriteData(QByteArray data) {
 		if (mSocket->state() == QAbstractSocket::ConnectedState) {
-				mSocket->write(IntToArray(2048)); //write size of data
+				mSocket->write(IntToArray(data.length())); //write size of data
 				mSocket->write(data); //write the data itself
 				return mSocket->waitForBytesWritten();
 		} else {
@@ -87,19 +87,19 @@ bool Client::WriteMessage(QByteArray data) {
 				return false;
 		}
 
-		//	// if (socket->state() == QAbstractSocket::ConnectedState) {
-		//			 //	socket->write(IntToArray(data.size())); //write size of data
+//			// if (socket->state() == QAbstractSocket::ConnectedState) {
+//					 //	socket->write(IntToArray(data.size())); //write size of data
 
-		//			 aData.insert(0, '>');
-		//			 qDebug()<< aData;
-		//			 u_int8_t vMessageCheckSum = CalculateMessageChecksum(aData);
+//					 aData.insert(0, '>');
+//					 qDebug()<< aData;
+//					 u_int8_t vMessageCheckSum = CalculateMessageChecksum(aData);
 
-		//			 qDebug()<< aData;
-		//			 socket->write(aData); //write the data itself
-		//			 return socket->waitForBytesWritten();
-		////    } else {
-		////        return false;
-		////    }
+//					 qDebug()<< aData;
+//					 socket->write(aData); //write the data itself
+//					 return socket->waitForBytesWritten();
+//		//    } else {
+//		//        return false;
+//		//    }
 }
 
 uint8_t Client::CalculateMessageChecksum(QByteArray aData) {

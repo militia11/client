@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 		//				qDebug() << "Nie można otworzyć pliku";
 		//		}
 
-        //		QByteArray aData("pinsex");
+		//		QByteArray aData("pinsex");
 		//		QDataStream out(&File);
 		//		QByteArray s("slsus");
 		//		out << s;
@@ -34,7 +34,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_pushButton_clicked() {
-        QByteArray vMessageData(">>336<<");
+		QByteArray vMessageData(">>336<");
 		qDebug() << "sumaFile->" << vMessageData;
 		vClient->WriteMessage(vMessageData);
 }
